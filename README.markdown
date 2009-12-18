@@ -26,7 +26,14 @@ Examples:
       acts_as_featured :main, :named_scope => :featured
     end
 
+Installation
+------------
+
+Typical plugin installation
+
+    script/plugin install git://github.com/bclennox/acts_as_featured.git
+
 License
 -------
 
-See COPYING.
+MIT. See LICENSE.
