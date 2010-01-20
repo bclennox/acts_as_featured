@@ -1,6 +1,6 @@
 # a basic model
 class Thingy < ActiveRecord::Base
-  acts_as_featured :featured
+  acts_as_featured :featured, :named_scope => true
 end
 
 # a model that belongs_to another model
@@ -24,7 +24,7 @@ end
 
 ActiveRecord::Migration.verbose = false
 ActiveRecord::Schema.define(:version => 1) do
-  [:thingies, :named_scope_thingies].each do |name|
+  [:thingies, :named_scope_thingies, :default_named_scope_thingies].each do |name|
     create_table name, :force => true do |t|
       t.boolean :featured
     end

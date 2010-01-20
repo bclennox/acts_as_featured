@@ -52,8 +52,9 @@ module MilesAhead
       # <tt>before_save</tt> callback: If we're designating this record to be
       # featured, we should clear that status on other records before saving this one.
       def remove_featured_from_other_records
-        if scope && self.send(featured_attribute)
-          scope.update_all(["#{featured_attribute} = ?", false])
+        if scope && send(featured_attribute)
+          # I hope I find a better way to do this
+          scope.update_all(["#{featured_attribute} = ?", false], "id != #{id || 0}")
         end
       end
 
@@ -68,7 +69,7 @@ module MilesAhead
       # <tt>before_destroy</tt> callback. If we destroy the featured, make the first
       # unfeaturedmain the featured. If this was the last record, don't do anything.
       def add_featured_to_first_record_if_featured
-        if self.send(featured_attribute) && scope && scope.count > 1
+        if scope && send(featured_attribute) && scope.count > 1
           new_main = scope.find(:first, :conditions => { featured_attribute => false })
           new_main.update_attribute(featured_attribute, true) unless new_main.nil?
         end

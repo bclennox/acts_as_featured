@@ -13,6 +13,13 @@ describe MilesAhead::ActsAsFeatured do
     after(:each) do
       Thingy.delete_all
     end
+    
+    it 'should leave featured status alone when saving the currently featured thingy' do
+      originally_featured = Thingy.create(:featured => true)
+      featured(Thingy).first.should == originally_featured
+      originally_featured.save
+      featured(Thingy).first.should == originally_featured
+    end
 
     it 'should remove featured status from the currently featured thingy when setting it on another thingy' do
       originally_featured = Thingy.create(:featured => true)
