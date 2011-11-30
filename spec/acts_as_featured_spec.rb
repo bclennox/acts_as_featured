@@ -82,20 +82,20 @@ describe MilesAhead::ActsAsFeatured do
     end
     
     it 'should not explode when the scope is nil' do
-      lambda {
+      expect {
         ScopedThingy.create!(:featured => true)
         featured(ScopedThingy).should have(1).item
-      }.should_not raise_error
+      }.not_to raise_error
     end
   end
   
   describe "named scope" do
     it 'should add a default named scope' do
-      DefaultNamedScopeThingy.scopes.should have_key(:featured)
+      DefaultNamedScopeThingy.should respond_to(:featured)
     end
 
     it 'should add a custom named scope' do
-      CustomNamedScopeThingy.scopes.should have_key(:special!)
+      CustomNamedScopeThingy.should respond_to(:special)
     end
     
     it 'should return the featured thingy from the named scope' do

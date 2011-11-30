@@ -6,7 +6,7 @@ Designates an attribute on this model to indicate "featuredness," where only one
 Pass in the name of the attribute and an options hash:
 
 * `:scope` - If given, designates the scope in which this model is featured. This would typically be a `belongs_to` association.
-* `:named_scope` - If `true`, creates a named scope using the name of the attribute given here. If it's a symbol, creates a named scope using that symbol.
+* `:create_scope` - If `true`, creates a named scope using the name of the attribute given here. If it's a symbol, creates a named scope using that symbol.
 
 Examples:
 
@@ -22,8 +22,8 @@ Examples:
     end
 
     class Article < ActiveRecord::Base
-      # creates a named_scope called Article.featured to return the featured article
-      acts_as_featured :main, :named_scope => :featured
+      # creates a named scope called Article.featured to return the featured article
+      acts_as_featured :main, :create_scope => :featured
     end
 
 Installation
@@ -31,7 +31,7 @@ Installation
 
 Typical plugin installation
 
-    script/plugin install git://github.com/bclennox/acts_as_featured.git
+    rails plugin install git://github.com/bclennox/acts_as_featured.git
 
 License
 -------

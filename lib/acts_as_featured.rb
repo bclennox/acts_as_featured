@@ -1,8 +1,6 @@
 module MilesAhead
   module ActsAsFeatured
-    def self.included(base)
-      base.extend ClassMethods
-    end
+    extend ActiveSupport::Concern
     
     module ClassMethods
       
@@ -12,7 +10,7 @@ module MilesAhead
       # Pass in the name of the attribute and an options hash:
       #
       # * <tt>:scope</tt> - If given, designates the scope in which this model is featured. This would typically be a <tt>belongs_to</tt> association.
-      # * <tt>:named_scope</tt> - If <tt>true</tt>, creates a named scope using the name of the attribute given here. If it's a symbol, creates a named scope using that symbol.
+      # * <tt>:create_scope</tt> - If <tt>true</tt>, creates a named scope using the name of the attribute given here. If it's a symbol, creates a named scope using that symbol.
       #
       #    class Project < ActiveRecord::Base
       #      # no two Projects will ever have their @featured attributes set simultaneously
@@ -26,8 +24,8 @@ module MilesAhead
       #    end
       #
       #    class Article < ActiveRecord::Base
-      #      # creates a named_scope called Article.featured to return the featured article
-      #      acts_as_featured :main, :named_scope => :featured
+      #      # creates a named scope called Article.featured to return the featured article
+      #      acts_as_featured :main, :create_scope => :featured
       #    end
       def acts_as_featured(attribute, options = {})
         cattr_accessor :featured_attribute
@@ -36,9 +34,9 @@ module MilesAhead
         self.featured_attribute = attribute
         self.featured_attribute_scope = options[:scope] || false
         
-        if scope_name = options[:named_scope]
+        if scope_name = options[:create_scope]
           scope_name = attribute if scope_name === true
-          named_scope scope_name, :conditions => { attribute => true }, :limit => 1
+          scope scope_name, where(attribute => true).limit(1)
         end
         
         before_save :remove_featured_from_other_records
@@ -82,15 +80,12 @@ module MilesAhead
       # Either the model class or the scope given to acts_as_featured (probably a
       # belongs_to association).
       def scope
+        association = self.class.featured_attribute_scope
         @scope ||= if association
           send(association).try(self.class.to_s.underscore.pluralize)
         else
           self.class
         end
-      end
-
-      def association
-        @association ||= self.class.featured_attribute_scope
       end
   end
 end

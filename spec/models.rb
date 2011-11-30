@@ -1,6 +1,6 @@
 # a basic model
 class Thingy < ActiveRecord::Base
-  acts_as_featured :featured, :named_scope => true
+  acts_as_featured :featured, :create_scope => true
 end
 
 # a model that belongs_to another model
@@ -12,14 +12,14 @@ class ThingyAggregator < ActiveRecord::Base
   has_many :scoped_thingies
 end
 
-# a model with a default named_scope
+# a model with a default named scope
 class DefaultNamedScopeThingy < ActiveRecord::Base
-  acts_as_featured :featured, :named_scope => true
+  acts_as_featured :featured, :create_scope => true
 end
 
-# a model with a custom named_scope
+# a model with a custom named scope
 class CustomNamedScopeThingy < ActiveRecord::Base
-  acts_as_featured :featured, :named_scope => :special!
+  acts_as_featured :featured, :create_scope => :special
 end
 
 ActiveRecord::Migration.verbose = false
