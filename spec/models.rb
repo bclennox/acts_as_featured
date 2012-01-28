@@ -1,3 +1,5 @@
+require File.join(File.dirname(__FILE__), '..', 'lib', 'acts_as_featured')
+
 # a basic model
 class Thingy < ActiveRecord::Base
   acts_as_featured :featured, :create_scope => true
@@ -29,11 +31,11 @@ ActiveRecord::Schema.define(:version => 1) do
       t.boolean :featured
     end
   end
-  
+
   create_table :thingy_aggregators, :force => true do |t|
     t.timestamps
   end
-  
+
   create_table :scoped_thingies, :force => true do |t|
     t.belongs_to :thingy_aggregator
     t.boolean :featured
