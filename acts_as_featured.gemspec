@@ -31,5 +31,9 @@ Gem::Specification.new do |s|
   }
 
   s.require_paths = ["lib"]
-  s.add_development_dependency "rspec", "sqlite3", "sqlite3-ruby", "activerecord"
+
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "sqlite3-ruby"
+  s.add_development_dependency "activerecord"
 end
