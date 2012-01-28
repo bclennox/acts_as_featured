@@ -26,14 +26,16 @@ Examples:
       acts_as_featured :main, :create_scope => :featured
     end
 
-Installation
-------------
+Running Tests
+-------------
 
-Typical plugin installation
+It's RSpec:
 
-    rails plugin install git://github.com/bclennox/acts_as_featured.git
+    rspec spec/acts_as_featured_spec.rb
+
+Make sure you run `bundle install` to get the development dependencies first.
 
 License
 -------
 
-MIT. See LICENSE.
+See MIT-LICENSE.

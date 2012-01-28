@@ -1,3 +1,5 @@
+require 'acts_as_featured/version'
+
 module MilesAhead
   module ActsAsFeatured
     extend ActiveSupport::Concern

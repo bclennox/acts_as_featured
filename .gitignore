@@ -1,2 +1,6 @@
 spec/*.sqlite3
 .rvmrc
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
