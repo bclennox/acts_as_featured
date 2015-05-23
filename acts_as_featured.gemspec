@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = %w{
     acts_as_featured.gemspec
     Gemfile
-    MIT-LICENSE
+    LICENSE.txt
     README.markdown
 
     lib/acts_as_featured.rb
@@ -32,8 +32,7 @@ Gem::Specification.new do |s|
 
   s.require_paths = ["lib"]
 
-  s.add_dependency "activerecord", ">= 3.0.0"
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "sqlite3-ruby"
+  s.add_dependency "activerecord", "~> 4.2.0"
+  s.add_development_dependency "rspec", "~> 3.2.0"
+  s.add_development_dependency "sqlite3", "~> 1.3.10"
 end

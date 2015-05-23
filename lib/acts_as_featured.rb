@@ -36,8 +36,8 @@ module ActsAsFeatured
       self.featured_attribute_scope = options[:scope] || false
 
       if scope_name = options[:create_scope]
-        scope_name = attribute if scope_name === true
-        scope scope_name, where(attribute => true).limit(1)
+        scope_name = attribute if scope_name == true
+        scope scope_name, -> { where(attribute => true).limit(1) }
       end
 
       before_save :remove_featured_from_other_records
@@ -52,15 +52,14 @@ private
   # featured, we should clear that status on other records before saving this one.
   def remove_featured_from_other_records
     if scope && send(featured_attribute)
-      # I hope I find a better way to do this
-      scope.update_all(["#{featured_attribute} = ?", false], "id != #{id || 0}")
+      scope.where.not(id: id || -1).update_all(featured_attribute => false)
     end
   end
 
   # <tt>after_save</tt> callback. If this save will result in no featured, just
   # make the first record featured.
   def add_featured_to_first_record
-    if scope && scope.count(:conditions => { featured_attribute => true }) == 0
+    if scope && scope.where(featured_attribute => true).none?
       scope.first.update_attribute(featured_attribute, true)
     end
   end
@@ -68,9 +67,9 @@ private
   # <tt>before_destroy</tt> callback. If we destroy the featured, make the first
   # unfeaturedmain the featured. If this was the last record, don't do anything.
   def add_featured_to_first_record_if_featured
-    if scope && send(featured_attribute) && scope.count > 1
-      new_main = scope.find(:first, :conditions => { featured_attribute => false })
-      new_main.update_attribute(featured_attribute, true) unless new_main.nil?
+    if scope && send(featured_attribute) && scope.many?
+      new_main = scope.where(featured_attribute => false).first
+      new_main.update(featured_attribute => true) if new_main
     end
   end
 

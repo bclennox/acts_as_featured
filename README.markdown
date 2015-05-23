@@ -38,4 +38,4 @@ Make sure you run `bundle install` to get the development dependencies first.
 License
 -------
 
-See MIT-LICENSE.
+See LICENSE.txt.

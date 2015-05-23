@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 1) do
   end
 
   create_table :thingy_aggregators, :force => true do |t|
-    t.timestamps
+    t.timestamps null: false
   end
 
   create_table :scoped_thingies, :force => true do |t|
